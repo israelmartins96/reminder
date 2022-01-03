@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+// Import React
+import React from 'react';
+// Import the reminders information
+import peopleData from './data-people';
+// Import the List component
+import List from './List';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => {
+  // People State
+  const [people, setPeople] = React.useState(peopleData);
+
+  const mainHeading = people.length + ' Birthdays Today';
+
+  const clearButton = document.querySelector('.clear-button');
+  
+  // Clears all reminders when called
+  const clearAllReminders = () => {
+    setPeople([]);
+    clearButton.setAttribute('disabled', 'disabled');
+    clearButton.classList.remove('clear-button--hover');
+  };
+  
+  return(
+    <div className="container">
+      <h1 className='main-heading'>{ mainHeading }</h1>
+      <List people={ people }/>
+      <button className='clear-button clear-button--hover' onClick={ () => { clearAllReminders(); } }>Clear All</button>
     </div>
   );
-}
+};
 
 export default App;
